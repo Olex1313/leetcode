@@ -2,9 +2,8 @@ package arrays101;
 
 import utils.NumberUtils;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 class Solution {
@@ -103,6 +102,91 @@ class Solution {
             numToIndex.add(num);
         }
         return false;
+    }
+
+    /**
+     * @param arr array of integers in 0..10^4 with length in 1..10^4
+     * @return return true if it is a valid mountain array.
+     * @see <a href="https://leetcode.com/explore/learn/card/fun-with-arrays/527/searching-for-items-in-an-array/3251/">Task</a>
+     */
+    public static boolean validMountainArray(int[] arr) {
+        int i = 0;
+        int n = arr.length;
+        for (; i + 1 < n && arr[i] < arr[i + 1]; i++) ;
+        if (i == 0 || i == n - 1) return false;
+        for (; i + 1 < n && arr[i] > arr[i + 1]; i++) ;
+        return i == n - 1;
+    }
+
+    /**
+     * @param arr array of integers in -10^4..10^4 with length in 1..10^4, arr sorted in non-decreasing order
+     * @return array of the squares of each number sorted in non-decreasing order.
+     * @see <a href="https://leetcode.com/explore/learn/card/fun-with-arrays/527/searching-for-items-in-an-array/3251/">Task</a>
+     */
+    public static int[] sortedSquares(int[] arr) {
+        int[] squaredNums = new int[arr.length];
+        int left = 0;
+        int right = arr.length - 1;
+        for (int i = arr.length - 1; left <= right; i--) {
+            if (Math.abs(arr[left]) > Math.abs(arr[right])) {
+                squaredNums[i] = arr[left] * arr[left];
+                left++;
+            } else {
+                squaredNums[i] = arr[right] * arr[right];
+                right--;
+            }
+        }
+        System.out.println(Arrays.toString(squaredNums));
+        return squaredNums;
+    }
+
+    /**
+     * @param arr array of integers in 1..10^5 with length in 1..10^4
+     * @return given array with each element replaced with greatest to the right and last one with -1
+     * @see <a href="https://leetcode.com/explore/learn/card/fun-with-arrays/511/in-place-operations/3259/">Task</a>
+     */
+    public static int[] replaceElements(int[] arr) {
+        if (arr.length == 1) {
+            arr[0] = -1;
+            return arr;
+        }
+        int max = -1;
+        for (int i = arr.length - 1; i >= 0; i--) {
+            int tmp = arr[i];
+            arr[i] = max;
+            max = Math.max(max, tmp);
+        }
+        return arr;
+    }
+
+    /**
+     * @param arr sorted array of integers in -100..100 with length in 1..3*10^4
+     * @return given array with each k unique elements placed in front
+     * @see <a href="https://leetcode.com/explore/learn/card/fun-with-arrays/511/in-place-operations/3258/">Task</a>
+     */
+    public static int removeDuplicates(int[] arr) {
+        int k = 0;
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] != arr[k]) {
+                k++;
+                arr[k] = arr[i];
+            }
+        }
+        return k + 1;
+    }
+
+    public static void moveZeroes(int[] nums) {
+        int i = 0;
+        int j = 0;
+        while (j < nums.length) {
+            if (nums[j] != 0) {
+                int tmp = nums[j];
+                nums[j] = nums[i];
+                nums[i] = tmp;
+                i++;
+            }
+            j++;
+        }
     }
 
 }

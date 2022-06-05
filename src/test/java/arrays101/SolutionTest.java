@@ -15,7 +15,7 @@ class SolutionTest {
 
     @ParameterizedTest
     @MethodSource("findMaxConsecutiveOnesProvider")
-    void findMaxConsecutiveOnes(int[] nums, int expectedAnswer) {
+    public void findMaxConsecutiveOnes(int[] nums, int expectedAnswer) {
         // given
 
         // when
@@ -27,7 +27,7 @@ class SolutionTest {
 
     @ParameterizedTest
     @MethodSource("findNumbersProvider")
-    void findNumbers(int[] nums, int expectedAnswer) {
+    public void findNumbers(int[] nums, int expectedAnswer) {
         // given
 
         // when
@@ -39,7 +39,7 @@ class SolutionTest {
 
     @ParameterizedTest
     @MethodSource("duplicateZeroesProvider")
-    void duplicateZeroes(int[] givenArray, int[] expectedAnswer) {
+    public void duplicateZeroes(int[] givenArray, int[] expectedAnswer) {
         // given
 
         // when
@@ -51,7 +51,7 @@ class SolutionTest {
 
     @ParameterizedTest
     @MethodSource("removeElementProvider")
-    void removeElement(int[] nums, int val, int[] expectedNums, int expectedAnswer) {
+    public void removeElement(int[] nums, int val, int[] expectedNums, int expectedAnswer) {
         // given
 
         // when
@@ -66,7 +66,7 @@ class SolutionTest {
 
     @ParameterizedTest
     @MethodSource("checkIfProvider")
-    void checkIf(int[] arr, boolean expectedAnswer) {
+    public void checkIf(int[] arr, boolean expectedAnswer) {
         // given
 
         // when
@@ -74,6 +74,69 @@ class SolutionTest {
 
         // then
         assertEquals(expectedAnswer, actualAnswer);
+    }
+
+    @ParameterizedTest
+    @MethodSource("validMountainArrayProvider")
+    public void validMountainArray(int[] arr, boolean expectedAnswer) {
+        // given
+
+        // when
+        boolean actualAnswer = Solution.validMountainArray(arr);
+
+        // then
+        assertEquals(expectedAnswer, actualAnswer);
+    }
+
+    @ParameterizedTest
+    @MethodSource("sortedSquaresProvider")
+    public void sortedSquares(int[] nums, int[] expectedAnswer) {
+        // given
+
+        // when
+        int[] answer = Solution.sortedSquares(nums);
+
+        // then
+        assertArrayEquals(expectedAnswer, answer);
+    }
+
+    @ParameterizedTest
+    @MethodSource("replaceElementsProvider")
+    public void replaceElementsTest(int[] arr, int[] expectedAnswer) {
+        // given
+
+        // when
+        int[] actualAnswer = Solution.replaceElements(arr);
+
+        // then
+        assertArrayEquals(expectedAnswer, actualAnswer);
+    }
+
+    @ParameterizedTest
+    @MethodSource("removeDuplicatesProvider")
+    public void removeDuplicatesTest(int[] arr, int[] expectedArr) {
+        // given
+
+        // when
+        int k = Solution.removeDuplicates(arr);
+
+        // then
+        assertEquals(expectedArr.length, k);
+        for(int i = 0; i < k; i++) {
+            assertEquals(arr[i], expectedArr[i]);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("moveZeroesProvider")
+    public void moveZeroes(int[] arr, int[] expectedArr) {
+        // given
+
+        // when
+        Solution.moveZeroes(arr);
+
+        // then
+        assertArrayEquals(expectedArr, arr);
     }
 
     public static List<Arguments> findMaxConsecutiveOnesProvider() {
@@ -145,6 +208,87 @@ class SolutionTest {
                 Arguments.of(secondCase, true),
                 Arguments.of(thirdCase, false),
                 Arguments.of(fourthCase, false)
+        );
+    }
+
+    public static List<Arguments> validMountainArrayProvider() {
+        int[] firstCase = {2, 5, 10, 3};
+        int[] secondCase = {7, 1, 14, 11};
+        int[] thirdCase = {1, 1, 11, 7};
+        int[] fourthCase = {0, 1};
+        return List.of(
+                Arguments.of(firstCase, true),
+                Arguments.of(secondCase, false),
+                Arguments.of(thirdCase, false),
+                Arguments.of(fourthCase, false)
+        );
+    }
+
+    public static List<Arguments> sortedSquaresProvider() {
+        int[] firstCase = {-5, -2, 3, 10};
+        int[] firstCaseAnswer = {4, 9, 25, 100};
+        int[] secondCase = {-7, 0, 11, 14};
+        int[] secondCaseAnswer = {0, 49, 121, 196};
+        int[] thirdCase = {-1, 1, 7,11};
+        int[] thirdCaseAnswer = {1, 1, 49, 121};
+        int[] fourthCase = {0, 1};
+        int[] fourthCaseAnswer = {0, 1};
+        return List.of(
+                Arguments.of(firstCase, firstCaseAnswer),
+                Arguments.of(secondCase, secondCaseAnswer),
+                Arguments.of(thirdCase, thirdCaseAnswer),
+                Arguments.of(fourthCase, fourthCaseAnswer)
+        );
+    }
+
+    public static List<Arguments> replaceElementsProvider() {
+        int[] firstCase = {-5, -2, 3, 10};
+        int[] firstCaseAnswer = {10, 10, 10, -1};
+        int[] secondCase = {-7, 0, 11, 14};
+        int[] secondCaseAnswer = {14, 14, 14, -1};
+        int[] thirdCase = {-1, 1, 7, 1};
+        int[] thirdCaseAnswer = {7, 7, 1, -1};
+        int[] fourthCase = {0, 1};
+        int[] fourthCaseAnswer = {1, -1};
+        return List.of(
+                Arguments.of(firstCase, firstCaseAnswer),
+                Arguments.of(secondCase, secondCaseAnswer),
+                Arguments.of(thirdCase, thirdCaseAnswer),
+                Arguments.of(fourthCase, fourthCaseAnswer)
+        );
+    }
+
+    public static List<Arguments> removeDuplicatesProvider() {
+        int[] firstCase = {-5, -5, 1, 1};
+        int[] firstCaseAnswer = {-5, 1};
+        int[] secondCase = {1, 1, 1, 1};
+        int[] secondCaseAnswer = {1};
+        int[] thirdCase = {-1, 1, 2, 2};
+        int[] thirdCaseAnswer = {-1, 1, 2};
+        int[] fourthCase = {1, 1, 2, 3, 4, 4, 4};
+        int[] fourthCaseAnswer = {1, 2, 3, 4};
+        return List.of(
+                Arguments.of(firstCase, firstCaseAnswer),
+                Arguments.of(secondCase, secondCaseAnswer),
+                Arguments.of(thirdCase, thirdCaseAnswer),
+                Arguments.of(fourthCase, fourthCaseAnswer)
+        );
+    }
+
+    public static List<Arguments> moveZeroesProvider() {
+        int[] firstCase = {0, 0, 1, 1};
+        int[] firstCaseAnswer = {1, 1, 0, 0};
+        int[] secondCase = {0, 0, 0};
+        int[] secondCaseAnswer = {0, 0, 0};
+        int[] thirdCase = {-1, 0, 2, 2};
+        int[] thirdCaseAnswer = {-1, 2, 2, 0};
+        int[] fourthCase = {1, 2, 3, 4};
+        int[] fourthCaseAnswer = {1, 2, 3, 4};
+        return List.of(
+                Arguments.of(firstCase, firstCaseAnswer),
+                Arguments.of(secondCase, secondCaseAnswer),
+                Arguments.of(thirdCase, thirdCaseAnswer),
+                Arguments.of(fourthCase, fourthCaseAnswer)
         );
     }
 
