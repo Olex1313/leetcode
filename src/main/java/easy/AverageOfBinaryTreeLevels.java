@@ -1,6 +1,5 @@
 package easy;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -14,34 +13,36 @@ public class AverageOfBinaryTreeLevels {
      * @see <a href="https://leetcode.com/problems/average-of-levels-in-binary-tree/">Task</a>
      */
     public static List<Double> averageOfLevels(TreeNode root) {
-        var ans = new ArrayList<Double>();
+        var ans = new LinkedList<Double>();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
         while (!queue.isEmpty()) {
-            var node = queue.poll();
-            queue.add(node.left);
-            queue.add(node.right);
+            long sum = 0;
+            long count = queue.size();
+            for (int i = 0; i < count; i++) {
+                var node = queue.poll();
+                sum += node.val;
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+            ans.add(sum * 1.0 / count);
         }
         return ans;
     }
 
-    private static class TreeNode {
+    static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
-
-        TreeNode() {
-        }
 
         TreeNode(int val) {
             this.val = val;
         }
 
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
     }
 
 }
